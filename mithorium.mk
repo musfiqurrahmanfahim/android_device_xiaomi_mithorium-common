@@ -9,6 +9,9 @@ TARGET_USES_XIAOMI_MITHORIUM_COMMON_TREE := true
 # Userspace Reboot
 $(call inherit-product, $(SRC_TARGET_DIR)/product/userspace_reboot.mk)
 
+# Bootanimation
+TARGET_BOOTANIMATION_HALF_RES := true
+
 # Kernel
 TARGET_KERNEL_VERSION ?= 4.9
 
