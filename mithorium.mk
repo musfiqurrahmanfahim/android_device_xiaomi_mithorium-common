@@ -498,6 +498,12 @@ MITHORIUM_PRODUCT_PACKAGES += \
     android.hardware.secure_element@1.1.vendor \
     android.hardware.secure_element@1.2.vendor \
     librmnetctl
+
+MITHORIUM_PRODUCT_PACKAGES += \
+    android.hardware.radio.c_shim@1.0 \
+    android.hardware.radio.c_shim@1.1 \
+    android.hardware.radio.c_shim@1.2 \
+    android.hardware.radio.config@1.1-service.wrapper
 endif
 
 MITHORIUM_PRODUCT_PACKAGES += \
