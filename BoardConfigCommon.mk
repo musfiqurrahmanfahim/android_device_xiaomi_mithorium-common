@@ -245,6 +245,9 @@ SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/private
 ifeq (true,$(call math_lt,$(PRODUCT_SHIPPING_API_LEVEL),28))
 BOARD_VENDOR_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/legacy/vendor
 endif
+ifeq ($(TARGET_IS_AUTOMOTIVE),true)
+BOARD_VENDOR_SEPOLICY_DIRS += device/google_car/common/sepolicy
+endif
 
 # Treble
 PRODUCT_FULL_TREBLE_OVERRIDE := true

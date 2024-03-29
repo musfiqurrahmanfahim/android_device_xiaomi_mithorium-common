@@ -30,6 +30,54 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_product.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/handheld_vendor.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/telephony_vendor.mk)
 
+# Automotive
+ifeq ($(TARGET_IS_AUTOMOTIVE),true)
+SYSTEM_OPTIMIZE_JAVA := false
+
+DEVICE_FRAMEWORK_MANIFEST_FILE += device/google_car/common/manifest.xml
+
+PRODUCT_PACKAGE_OVERLAYS += device/google_car/common/overlay
+
+PRODUCT_PACKAGES += \
+    android.hardware.automotive.audiocontrol-service.example \
+    android.hardware.automotive.can@1.0-service \
+    android.hardware.automotive.vehicle@2.0-default-service \
+    android.hardware.broadcastradio@2.0-service \
+    CarServiceOverlayPhoneCar \
+    ExcludeRamdumpUploader
+
+PRODUCT_PACKAGES_DEBUG += \
+    canhalctrl \
+    canhaldump \
+    canhalsend \
+    android.hardware.automotive.occupant_awareness@1.0-service \
+    android.hardware.automotive.occupant_awareness@1.0-service_mock
+
+PRODUCT_COPY_FILES += \
+    packages/services/Car/car_product/init/init.bootstat.rc:root/init.bootstat.rc \
+    packages/services/Car/car_product/init/init.car.rc:root/init.car.rc
+
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/car_core_hardware.xml:system/etc/permissions/car_core_hardware.xml \
+    frameworks/native/data/etc/android.hardware.broadcastradio.xml:system/etc/permissions/android.hardware.broadcastradio.xml \
+    frameworks/native/data/etc/android.hardware.screen.landscape.xml:system/etc/permissions/android.hardware.screen.landscape.xml \
+    frameworks/native/data/etc/android.hardware.type.automotive.xml:system/etc/permissions/android.hardware.type.automotive.xml
+
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.adb.secure=0 \
+    persist.eab.supported=0 \
+    persist.rcs.supported=0
+
+ENABLE_EVS_SAMPLE := false
+
+include packages/services/Car/car_product/occupant_awareness/OccupantAwareness.mk
+#include packages/services/Car/cpp/computepipe/products/computepipe.mk
+
+$(call inherit-product, packages/services/Car/car_product/build/car.mk)
+
+EXTRA_LITE := true
+endif
+
 # APEX
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
@@ -172,6 +220,7 @@ MITHORIUM_PRODUCT_PACKAGES += \
 MITHORIUM_PRODUCT_PACKAGES += \
     vendor.qti.hardware.bluetooth_audio@2.1.vendor
 
+ifneq ($(TARGET_IS_AUTOMOTIVE),true)
 ifeq ($(TARGET_IS_TABLET),true)
 # Set the Bluetooth Class of Device
 # Service Field: 0x5A -> 90
@@ -195,6 +244,7 @@ else
 PRODUCT_VENDOR_PROPERTIES += \
     bluetooth.device.class_of_device=90,2,12
 endif
+endif # !TARGET_IS_AUTOMOTIVE
 
 # Camera
 ifneq ($(TARGET_USES_DEVICE_SPECIFIC_CAMERA_PROVIDER),true)
@@ -442,7 +492,11 @@ ifeq ($(TARGET_IS_TABLET),true)
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-tablet
 endif
 
+ifeq ($(TARGET_IS_AUTOMOTIVE),true)
+PRODUCT_ENFORCE_RRO_TARGETS :=
+else
 PRODUCT_ENFORCE_RRO_TARGETS := *
+endif
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += $(LOCAL_PATH)/overlay-radio/packages/apps/CarrierConfig
 
 # Perf
