@@ -216,6 +216,10 @@ TARGET_SYSTEM_PROP += $(COMMON_PATH)/system.prop
 TARGET_SYSTEM_EXT_PROP += $(COMMON_PATH)/system_ext.prop
 TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor.prop
 
+ifneq ($(TARGET_IS_AUTOMOTIVE),true)
+TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor_btprofiles.prop
+endif
+
 ifeq ($(TARGET_KERNEL_VERSION),4.19)
 TARGET_VENDOR_PROP += $(COMMON_PATH)/vendor_k4.19.prop
 endif
