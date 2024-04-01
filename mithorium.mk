@@ -86,10 +86,12 @@ PRODUCT_SUPPORTS_TUNER := false
 $(call inherit-product, device/google/atv/products/atv_base.mk)
 
 DEVICE_PACKAGE_OVERLAYS += \
+    $(LOCAL_PATH)/overlay-tv \
     device/google/atv/overlay
 
 PRODUCT_COPY_FILES += \
-    device/google/atv/permissions/tv_sdk_excluded_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/tv_sdk_excluded_core_hardware.xml
+    device/google/atv/permissions/tv_sdk_excluded_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/tv_sdk_excluded_core_hardware.xml \
+    frameworks/native/data/etc/android.hardware.screen.landscape.xml:system/etc/permissions/android.hardware.screen.landscape.xml
 
 PRODUCT_PACKAGES += \
     LeanbackIME \
