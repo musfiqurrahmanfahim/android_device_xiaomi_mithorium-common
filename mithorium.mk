@@ -6,10 +6,11 @@
 
 TARGET_USES_XIAOMI_MITHORIUM_COMMON_TREE := true
 
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
+ifneq ($(TARGET_IS_TV),true)
 #
 # All components inherited here go to system image
 #
-$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_system.mk)
 
 #
@@ -29,6 +30,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_product.mk)
 # TODO(b/136525499): move *_vendor.mk into the vendor makefile later
 $(call inherit-product, $(SRC_TARGET_DIR)/product/handheld_vendor.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/telephony_vendor.mk)
+endif
 
 # Automotive
 ifeq ($(TARGET_IS_AUTOMOTIVE),true)
@@ -74,6 +76,29 @@ include packages/services/Car/car_product/occupant_awareness/OccupantAwareness.m
 #include packages/services/Car/cpp/computepipe/products/computepipe.mk
 
 $(call inherit-product, packages/services/Car/car_product/build/car.mk)
+
+EXTRA_LITE := true
+endif
+
+# TV
+ifeq ($(TARGET_IS_TV),true)
+PRODUCT_SUPPORTS_TUNER := false
+$(call inherit-product, device/google/atv/products/atv_base.mk)
+
+DEVICE_PACKAGE_OVERLAYS += \
+    device/google/atv/overlay
+
+PRODUCT_COPY_FILES += \
+    device/google/atv/permissions/tv_sdk_excluded_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/tv_sdk_excluded_core_hardware.xml
+
+PRODUCT_PACKAGES += \
+    LeanbackIME \
+    TvProvision \
+    TvSampleLeanbackLauncher
+
+PRODUCT_AAPT_PREF_CONFIG := tvdpi
+
+TARGET_HAS_NO_RADIO := true
 
 EXTRA_LITE := true
 endif
@@ -221,6 +246,7 @@ MITHORIUM_PRODUCT_PACKAGES += \
     vendor.qti.hardware.bluetooth_audio@2.1.vendor
 
 ifneq ($(TARGET_IS_AUTOMOTIVE),true)
+ifneq ($(TARGET_IS_TV),true)
 ifeq ($(TARGET_IS_TABLET),true)
 # Set the Bluetooth Class of Device
 # Service Field: 0x5A -> 90
@@ -244,6 +270,7 @@ else
 PRODUCT_VENDOR_PROPERTIES += \
     bluetooth.device.class_of_device=90,2,12
 endif
+endif # !TARGET_IS_TV
 endif # !TARGET_IS_AUTOMOTIVE
 
 # Camera
