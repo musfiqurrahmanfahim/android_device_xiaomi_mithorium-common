@@ -517,6 +517,7 @@ MITHORIUM_PRODUCT_PACKAGES += \
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
+    vendor/qcom/opensource/usb/etc \
     $(LOCAL_PATH)
 
 # Subsystem state notifier
