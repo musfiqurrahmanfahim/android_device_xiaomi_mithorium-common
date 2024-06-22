@@ -519,6 +519,7 @@ PRODUCT_AAPT_PREF_CONFIG ?= xhdpi
 MITHORIUM_PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl \
     android.hardware.sensors@1.0-service \
+    libpower.vendor:64 \
     libsensorndkbridge
 
 # Shims
