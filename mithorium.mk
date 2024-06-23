@@ -610,6 +610,15 @@ PRODUCT_PACKAGES += $(MITHORIUM_PRODUCT_PACKAGES)
 # Inherit MiThorium HALs
 $(call inherit-product-if-exists, hardware/mithorium/mithorium_qcom_hals.mk)
 
+# Wifi firmware symlinks
+ifneq ($(TARGET_EXCLUDE_DEFAULT_WIFI_FIRMWARE_SYMLINKS),true)
+PRODUCT_PACKAGES += \
+    firmware_wlan_mac.bin_symlink \
+    firmware_WCNSS_qcom_cfg.ini_symlink \
+    firmware_WCNSS_qcom_wlan_nv.bin_symlink \
+    firmware_WCNSS_wlan_dictionary.dat_symlink
+endif
+
 # Inherit the proprietary files
 ifeq ($(TARGET_KERNEL_VERSION),4.9)
 $(call inherit-product, vendor/xiaomi/mithorium-common/mithorium-common-vendor.mk)
