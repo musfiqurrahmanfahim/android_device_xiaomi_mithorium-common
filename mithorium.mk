@@ -551,9 +551,11 @@ endif
 MITHORIUM_PRODUCT_PACKAGES += \
     vendor.lineage.trust@1.0-service
 
-# USB HAL
+# USB
 MITHORIUM_PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-service.basic
+    usb_compositions.conf \
+    android.hardware.usb@1.0-service.basic \
+    android.hardware.usb.gadget@1.2-service-qti
 
 # Vibrator
 ifneq ($(TARGET_USES_DEVICE_SPECIFIC_VIBRATOR),true)
