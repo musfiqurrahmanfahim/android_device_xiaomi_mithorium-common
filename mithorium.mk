@@ -261,6 +261,14 @@ MITHORIUM_PRODUCT_PACKAGES += \
     vendor.display.config@1.11.vendor \
     vendor.display.config@2.0.vendor
 
+MITHORIUM_PRODUCT_PACKAGES += \
+    libEGL_adreno_libEGL_adreno_symlink32 \
+    libGLESv2_adreno_libGLESv2_adreno_symlink32 \
+    libq3dtools_adreno_libq3dtools_adreno_symlink32 \
+    libEGL_adreno_libEGL_adreno_symlink64 \
+    libGLESv2_adreno_libGLESv2_adreno_symlink64 \
+    libq3dtools_adreno_libq3dtools_adreno_symlink64
+
 # DRM
 MITHORIUM_PRODUCT_PACKAGES += \
     android.hardware.drm-service.clearkey \
