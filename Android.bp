@@ -40,3 +40,10 @@ install_symlink {
     installed_location: "firmware/wlan/prima/WCNSS_wlan_dictionary.dat",
     symlink_target: "/mnt/vendor/persist/WCNSS_wlan_dictionary.dat",
 }
+
+install_symlink {
+    name: "vendor_lib_hw_sound_trigger.primary.msm8953.so_symlink",
+    vendor: true,
+    installed_location: "lib/hw/sound_trigger.primary.msm8953.so",
+    symlink_target: "/vendor/lib/hw/sound_trigger.primary.msm8937.so",
+}

@@ -27,6 +27,9 @@ TARGET_KERNEL_VERSION ?= 4.9
 TARGET_BOARD_PLATFORM ?= msm8937
 
 ifeq ($(TARGET_BOARD_PLATFORM),msm8953)
+MITHORIUM_PRODUCT_PACKAGES += \
+    vendor_lib_hw_sound_trigger.primary.msm8953.so_symlink
+
 PRODUCT_VENDOR_PROPERTIES += \
     ro.hardware.activity_recognition=msm8937 \
     ro.hardware.sound_trigger=msm8937 \
