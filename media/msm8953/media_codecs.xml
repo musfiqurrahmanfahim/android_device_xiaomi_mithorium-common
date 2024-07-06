@@ -309,6 +309,5 @@ Only the three quirks included above are recognized at this point:
             <Limit name="concurrent-instances" max="2" />
             <Limit name="performance-point-1920x1088" value="30" />
         </MediaCodec>
-        <MediaCodec name="OMX.google.opus.decoder" type="audio/opus" update="true" rank="100"/>
     </Decoders>
 </MediaCodecs>
